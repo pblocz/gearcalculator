@@ -2,7 +2,7 @@
 import math
 
 wheel_diameter_col = "Wheel Diameter (mm)"
-hub_ration_col = "Hub Ratio (%)"
+hub_ratio_col = "Hub Ratio (%)"
 gear_inches_col = "Gear Inches"
 metre_development_col = "Metre Development"
 gain_ratio_col = "Gain Ratio"
@@ -33,7 +33,7 @@ def gear_calculations(etrto_diameter_mm, tire_width_mm, front_teeth, rear_teeth,
 
     return {
         wheel_diameter_col: wheel_diameter_mm,
-        hub_ration_col: hub_ratio * 100,
+        hub_ratio_col: hub_ratio * 100,
         gear_inches_col: gear_inches,
         metre_development_col: metre_development,
         gain_ratio_col: gain_ratio,
@@ -80,3 +80,23 @@ if __name__ == "__main__":
             f"Metre Dev: {res['Metre Development']:.2f} m | "
             f"Gain Ratio: {res['Gain Ratio']:.2f}")
 
+
+definitions = {
+    gear_inches_col: """
+        - What: Measures gear size as the equivalent wheel diameter.
+        - Formula: (Front Teeth / Rear Teeth) × Wheel Diameter (in inches)
+        - Use: Higher number = harder gear (more speed per pedal turn).
+    """,
+
+    metre_development_col: """
+        - What: Distance the bike travels per full pedal turn.
+        - Formula: (Front Teeth / Rear Teeth) × Wheel Circumference (in metres)
+        - Use: Shows rollout; common in track or metric-based systems.
+    """,
+
+    gain_ratio_col: """
+        - What: Measures how far the bike moves per unit of leg movement.
+        - Formula: (Wheel Radius / Crank Length) × (Front Teeth / Rear Teeth)
+        - Use: Best for comparing gearing across different bike sizes or crank lengths.
+    """,
+}

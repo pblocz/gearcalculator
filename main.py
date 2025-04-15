@@ -1,5 +1,5 @@
 import streamlit as st
-from gearcalc import batch_gear_calculations, hub_ration_col, rear_teeth_col, gear_inches_col, metre_development_col, gain_ratio_col
+from gearcalc import batch_gear_calculations, hub_ratio_col, rear_teeth_col, gear_inches_col, metre_development_col, gain_ratio_col, definitions
 import polars as pl
 import altair as alt
 
@@ -29,10 +29,13 @@ def main():
 
     target_col = st.selectbox("Select value column", [gear_inches_col, metre_development_col, gain_ratio_col])
 
+    st.subheader(target_col)
+    st.markdown(definitions[target_col])
+
     flat_data = pl.DataFrame(results)
     
     pivot_data = flat_data.pivot(
-        on=hub_ration_col,
+        on=hub_ratio_col,
         index=rear_teeth_col,
         values=[target_col]
     )
@@ -48,16 +51,16 @@ def main():
         alt.Chart(flat_data).mark_line(point=True)
         .encode(
             x=alt.X(gear_inches_col).scale(zero=False),
-            y=f"{hub_ration_col}:N",
-            color=f"{hub_ration_col}:N",
+            y=f"{hub_ratio_col}:N",
+            color=f"{hub_ratio_col}:N",
         )
     )
     chart2 = (
         alt.Chart(pl.DataFrame(default_results)).mark_line(point=True)
         .encode(
             x=alt.X(gear_inches_col).scale(zero=False),
-            y=f"{hub_ration_col}:N",
-            color=f"{hub_ration_col}:N",
+            y=f"{hub_ratio_col}:N",
+            color=f"{hub_ratio_col}:N",
         )
     )
     st.altair_chart(
